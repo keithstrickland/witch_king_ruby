@@ -1,14 +1,12 @@
 class Tile
-  attr_accessor :symbol,:continue
+  attr_accessor :symbol
 
-  def initialize(symbol, continue_chance)
+  def initialize(symbol)
     @symbol = symbol
-    @continue = continue_chance
   end
 
-  def continue?
-    num = rand(100) + 1
-    num <= @continue
+  def to_s
+    display
   end
 
   def display
@@ -16,6 +14,6 @@ class Tile
   end
 
   def ==(other)
-    @symbol = other.symbol
+    @symbol == other.symbol
   end
 end

@@ -10,7 +10,7 @@ class Map
   def initialize(rows, cols)
     @rows  = rows
     @cols  = cols
-    @blank_tile = Tile.new('?', 0)
+    @blank_tile = Tile.new('?')
     @cells = Array.new(rows) { Array.new(cols, @blank_tile) }
   end
   
@@ -19,36 +19,45 @@ class Map
   end
 
   def set(position, tile)
+    puts "set: #{tile} - #{position}"
     @cells[position.row][position.col] = tile
+  end
+
+  def set_nearby(cursor, nearby, direction)
+    if cursor.is_start_position?
+      nearby[direction] = @blank_tile
+    else
+      nearby[direction] = cell(cursor.position)
+    end
   end
   
   def nearby(position)
     cursor = Cursor.new(position, @rows, @cols)
-    nearby = []
+    nearby = {}
 
     cursor.n
-    nearby << cell(cursor.position) unless cursor.is_start_position?
+    set_nearby(cursor, nearby, :n)
 
     cursor.ne
-    nearby << cell(cursor.position) unless cursor.is_start_position?
+    set_nearby(cursor, nearby, :ne)
 
     cursor.e
-    nearby << cell(cursor.position) unless cursor.is_start_position?
+    set_nearby(cursor, nearby, :e)
 
     cursor.se
-    nearby << cell(cursor.position) unless cursor.is_start_position?
+    set_nearby(cursor, nearby, :se)
 
     cursor.s
-    nearby << cell(cursor.position) unless cursor.is_start_position?
+    set_nearby(cursor, nearby, :s)
 
     cursor.sw
-    nearby << cell(cursor.position) unless cursor.is_start_position?
+    set_nearby(cursor, nearby, :sw)
 
     cursor.w
-    nearby << cell(cursor.position) unless cursor.is_start_position?
+    set_nearby(cursor, nearby, :w)
 
     cursor.nw
-    nearby << cell(cursor.position) unless cursor.is_start_position?
+    set_nearby(cursor, nearby, :nw)
 
     nearby
   end

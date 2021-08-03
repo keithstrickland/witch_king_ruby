@@ -10,4 +10,8 @@ class Position
   def eql?(row, col)
     @row == row && @col == col
   end
+
+  def to_s
+    "row: #{@row} col: #{@col}"
+  end
 end

@@ -7,15 +7,11 @@ class Cursor
   attr_accessor :col_max
 
   def initialize(initial_position, rows, cols)
-    @position = initial_position
-    @start_row = initial_position.row
-    @start_col = initial_position.col
-    @row_max = rows - 1
-    @col_max = cols - 1
-  end
-  
-  def eql?(position)
-    @position.row == position.row && @position.col == position.col
+    @position  = Position.new(initial_position.row, initial_position.col)
+    @start_row = @position.row
+    @start_col = @position.col
+    @row_max   = rows - 1
+    @col_max   = cols - 1
   end
 
   def is_start_position?
