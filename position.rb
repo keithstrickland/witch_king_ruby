@@ -11,6 +11,10 @@ class Position
     @row == row && @col == col
   end
 
+  def ==(other)
+    @row == other.row && @col == other.col
+  end
+
   def to_s
     "row: #{@row} col: #{@col}"
   end

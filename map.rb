@@ -1,4 +1,4 @@
-require_relative 'cursor'
+require_relative 'position_offset'
 require_relative 'tile'
 
 class Map
@@ -10,59 +10,62 @@ class Map
   def initialize(rows, cols)
     @rows  = rows
     @cols  = cols
-    @blank_tile = Tile.new('?')
+    @blank_tile = Tile.new(' ')
     @cells = Array.new(rows) { Array.new(cols, @blank_tile) }
   end
-  
+
+  def out_of_bounds(position)
+    position.row == -1 || position.col == -1 || position.row == rows || position.col == cols
+  end
+
   def cell(position)
-    @cells[position.row][position.col]
+    if out_of_bounds position
+      @blank_tile
+    else
+      @cells[position.row][position.col]
+    end
   end
 
   def set(position, tile)
-    puts "set: #{tile} - #{position}"
     @cells[position.row][position.col] = tile
   end
 
   def set_nearby(cursor, nearby, direction)
-    if cursor.is_start_position?
-      nearby[direction] = @blank_tile
-    else
-      nearby[direction] = cell(cursor.position)
-    end
+    nearby[direction] = cell(cursor.offset_position)
   end
   
   def nearby(position)
-    cursor = Cursor.new(position, @rows, @cols)
+    offset = PositionOffset.new(position)
     nearby = {}
 
-    cursor.n
-    set_nearby(cursor, nearby, :n)
+    offset.n
+    set_nearby(offset, nearby, :n)
 
-    cursor.ne
-    set_nearby(cursor, nearby, :ne)
+    offset.ne
+    set_nearby(offset, nearby, :ne)
 
-    cursor.e
-    set_nearby(cursor, nearby, :e)
+    offset.e
+    set_nearby(offset, nearby, :e)
 
-    cursor.se
-    set_nearby(cursor, nearby, :se)
+    offset.se
+    set_nearby(offset, nearby, :se)
 
-    cursor.s
-    set_nearby(cursor, nearby, :s)
+    offset.s
+    set_nearby(offset, nearby, :s)
 
-    cursor.sw
-    set_nearby(cursor, nearby, :sw)
+    offset.sw
+    set_nearby(offset, nearby, :sw)
 
-    cursor.w
-    set_nearby(cursor, nearby, :w)
+    offset.w
+    set_nearby(offset, nearby, :w)
 
-    cursor.nw
-    set_nearby(cursor, nearby, :nw)
+    offset.nw
+    set_nearby(offset, nearby, :nw)
 
     nearby
   end
 
   def nearby?(position, tile)
-    nearby(position).include?(tile.display)
+    nearby(position).to_a.include?(tile)
   end
 end

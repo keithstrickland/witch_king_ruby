@@ -6,10 +6,11 @@ class Tile
   end
 
   def to_s
-    display
+    @symbol
   end
 
-  def display
+  def inspect
+    super
     @symbol
   end
 
