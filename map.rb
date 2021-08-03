@@ -66,6 +66,6 @@ class Map
   end
 
   def nearby?(position, tile)
-    nearby(position).to_a.include?(tile)
+    nearby(position).values.to_a.include?(tile)
   end
 end

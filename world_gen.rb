@@ -11,26 +11,26 @@ COLS = ARGV[1].to_i || 32
 $world = Map.new(ROWS, COLS)
 
 # Terrain tiles
-# $forest     = Tile.new('.'.green).freeze
-# $mountain   = Tile.new('M'.light_black).freeze
-# $water      = Tile.new('O'.blue).freeze
-# $sanctuary  = Tile.new('S'.white).freeze
-# $town       = Tile.new('T'.yellow).freeze
-# $witch_king = Tile.new('W'.magenta).freeze
+$forest     = Tile.new('.'.green).freeze
+$mountain   = Tile.new('M'.light_black).freeze
+$water      = Tile.new('O'.blue).freeze
+$sanctuary  = Tile.new('S'.white).freeze
+$town       = Tile.new('T'.yellow).freeze
+$witch_king = Tile.new('W'.magenta).freeze
 
-$forest     = Tile.new('.').freeze
-$mountain   = Tile.new('M').freeze
-$water      = Tile.new('O').freeze
-$sanctuary  = Tile.new('S').freeze
-$town       = Tile.new('T').freeze
-$witch_king = Tile.new('W').freeze
+# $forest     = Tile.new('.').freeze
+# $mountain   = Tile.new('M').freeze
+# $water      = Tile.new('O').freeze
+# $sanctuary  = Tile.new('S').freeze
+# $town       = Tile.new('T').freeze
+# $witch_king = Tile.new('W').freeze
 
 def gen_building
    num = rand(6) + 1
    case num
-   when 1..4
+   when 1..5
      $sanctuary
-   when 5..6
+   when 6
      $town
    end   
 end
@@ -99,8 +99,8 @@ ROWS.times do |i|
   end
 end
 
-puts
-print_map
+# puts
+# print_map
 
 # Second pass - fill in
 puts "Second pass..."
@@ -108,44 +108,42 @@ ROWS.times do |i|
   COLS.times do |j|
     position = Position.new(i, j)
     current_tile = $world.cell(position)
-    # if current_tile == $forest
-    #   puts "Second pass forest..."
-    #   if $world.nearby?(position, $mountain)
-    #     puts "Checking mountain add..."
-    #     $world.set(position, $mountain) if continue?(30)
-    #   end
-    # end
-    if current_tile == $town
-      pp $world.nearby(position)
+    if current_tile == $forest
+      # puts "Second pass forest..."
+      if $world.nearby?(position, $mountain)
+        # puts "Checking mountain add..."
+        $world.set(position, $mountain) if continue?(15)
+      elsif $world.nearby?(position, $water)
+        $world.set(position, $water) if continue?(10)
+      end
     end
   end
 end
 
-# wk_start_row    = ROWS/2
-# wk_start_column = COLS/2
-#
-# # Witch King Fortress
-# puts "generating fortress"
-# $world.set(Position.new(wk_start_row, wk_start_column), $witch_king)
-# $world.set(Position.new(wk_start_row + 1, wk_start_column), $witch_king)
-# $world.set(Position.new(wk_start_row + 1, wk_start_column + 1), $witch_king)
-# $world.set(Position.new(wk_start_row, wk_start_column + 1), $witch_king)
-#
-# # Only forest around Witch King Fortress
-# puts "generating forest around fortress"
-# $world.set(Position.new(wk_start_row - 1, wk_start_column - 1), $forest)
-# $world.set(Position.new(wk_start_row - 1, wk_start_column), $forest)
-# $world.set(Position.new(wk_start_row - 1, wk_start_column + 1), $forest)
-# $world.set(Position.new(wk_start_row - 1, wk_start_column + 2), $forest)
-# $world.set(Position.new(wk_start_row, wk_start_column - 1), $forest)
-# $world.set(Position.new(wk_start_row, wk_start_column + 2), $forest)
-# $world.set(Position.new(wk_start_row + 1, wk_start_column - 1), $forest)
-# $world.set(Position.new(wk_start_row + 1, wk_start_column + 2), $forest)
-# $world.set(Position.new(wk_start_row + 2, wk_start_column - 1), $forest)
-# $world.set(Position.new(wk_start_row + 2, wk_start_column), $forest)
-# $world.set(Position.new(wk_start_row + 2, wk_start_column + 1), $forest)
-# $world.set(Position.new(wk_start_row + 2, wk_start_column + 2), $forest)
+wk_start_row    = ROWS/2
+wk_start_column = COLS/2
+
+# Witch King Fortress
+puts "generating fortress"
+$world.set(Position.new(wk_start_row, wk_start_column), $witch_king)
+$world.set(Position.new(wk_start_row + 1, wk_start_column), $witch_king)
+$world.set(Position.new(wk_start_row + 1, wk_start_column + 1), $witch_king)
+$world.set(Position.new(wk_start_row, wk_start_column + 1), $witch_king)
+
+# Only forest around Witch King Fortress
+puts "generating forest around fortress"
+$world.set(Position.new(wk_start_row - 1, wk_start_column - 1), $forest)
+$world.set(Position.new(wk_start_row - 1, wk_start_column), $forest)
+$world.set(Position.new(wk_start_row - 1, wk_start_column + 1), $forest)
+$world.set(Position.new(wk_start_row - 1, wk_start_column + 2), $forest)
+$world.set(Position.new(wk_start_row, wk_start_column - 1), $forest)
+$world.set(Position.new(wk_start_row, wk_start_column + 2), $forest)
+$world.set(Position.new(wk_start_row + 1, wk_start_column - 1), $forest)
+$world.set(Position.new(wk_start_row + 1, wk_start_column + 2), $forest)
+$world.set(Position.new(wk_start_row + 2, wk_start_column - 1), $forest)
+$world.set(Position.new(wk_start_row + 2, wk_start_column), $forest)
+$world.set(Position.new(wk_start_row + 2, wk_start_column + 1), $forest)
+$world.set(Position.new(wk_start_row + 2, wk_start_column + 2), $forest)
 
 puts
-
 print_map
