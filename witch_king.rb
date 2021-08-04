@@ -1,11 +1,15 @@
 class WitchKing
 
+  OFFSET_RANGE = 4
+
   def gen_wk_start_row(rows)
-    rows/2
+    offset = rand(OFFSET_RANGE)-2
+    rows/2 + offset
   end
 
   def gen_wk_start_column(cols)
-    cols/2
+    offset = rand(OFFSET_RANGE)-2
+    cols/2 + offset
   end
 
   def add_to(map, rows, cols)

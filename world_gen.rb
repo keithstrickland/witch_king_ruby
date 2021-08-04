@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'colorize'
+# require 'colorize'
+require 'pastel'
 require_relative 'map'
 require_relative 'tile'
 require_relative 'witch_king'
@@ -10,21 +11,29 @@ COLS = ARGV[1].to_i || 32
 
 # World map
 $world = Map.new(ROWS, COLS)
+$pastel = Pastel.new
 
 # Terrain tiles
-# $forest     = Tile.new('..'.green).freeze
+# $forest     = Tile.new('  '.green).freeze
 # $mountain   = Tile.new('MM'.light_black).freeze
 # $water      = Tile.new('OO'.blue).freeze
 # $sanctuary  = Tile.new('SS'.white).freeze
 # $town       = Tile.new('TT'.yellow).freeze
 # $witch_king = Tile.new('WK'.magenta).freeze
 
-$forest     = Tile.new('.'.green).freeze
-$mountain   = Tile.new('M'.light_black).freeze
-$water      = Tile.new('O'.blue).freeze
-$sanctuary  = Tile.new('S'.white).freeze
-$town       = Tile.new('T'.yellow).freeze
-$witch_king = Tile.new('W'.magenta).freeze
+$forest     = Tile.new($pastel.on_green('  ')).freeze
+$mountain   = Tile.new($pastel.on_red('  ')).freeze
+$water      = Tile.new($pastel.on_blue('  ')).freeze
+$sanctuary  = Tile.new($pastel.on_bright_white('  ')).freeze
+$town       = Tile.new($pastel.on_bright_yellow('  ')).freeze
+$witch_king = Tile.new($pastel.on_magenta('WK')).freeze
+
+# $forest     = Tile.new('.'.green).freeze
+# $mountain   = Tile.new('M'.light_black).freeze
+# $water      = Tile.new('O'.blue).freeze
+# $sanctuary  = Tile.new('S'.white).freeze
+# $town       = Tile.new('T'.yellow).freeze
+# $witch_king = Tile.new('W'.magenta).freeze
 
 # $forest     = Tile.new('.').freeze
 # $mountain   = Tile.new('M').freeze
