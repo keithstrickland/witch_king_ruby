@@ -11,7 +11,7 @@ class Map
     @rows  = rows
     @cols  = cols
     @blank_tile = Tile.new(' ')
-    @cells = Array.new(rows) { Array.new(cols, @blank_tile) }
+    @cells = Array.new(rows) { Array.new(cols) }
   end
 
   def out_of_bounds(position)

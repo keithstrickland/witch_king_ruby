@@ -3,6 +3,7 @@
 require 'colorize'
 require_relative 'map'
 require_relative 'tile'
+require_relative 'witch_king'
 
 ROWS = ARGV[0].to_i || 32
 COLS = ARGV[1].to_i || 32
@@ -11,6 +12,13 @@ COLS = ARGV[1].to_i || 32
 $world = Map.new(ROWS, COLS)
 
 # Terrain tiles
+# $forest     = Tile.new('..'.green).freeze
+# $mountain   = Tile.new('MM'.light_black).freeze
+# $water      = Tile.new('OO'.blue).freeze
+# $sanctuary  = Tile.new('SS'.white).freeze
+# $town       = Tile.new('TT'.yellow).freeze
+# $witch_king = Tile.new('WK'.magenta).freeze
+
 $forest     = Tile.new('.'.green).freeze
 $mountain   = Tile.new('M'.light_black).freeze
 $water      = Tile.new('O'.blue).freeze
@@ -120,30 +128,7 @@ ROWS.times do |i|
   end
 end
 
-wk_start_row    = ROWS/2
-wk_start_column = COLS/2
-
-# Witch King Fortress
-puts "generating fortress"
-$world.set(Position.new(wk_start_row, wk_start_column), $witch_king)
-$world.set(Position.new(wk_start_row + 1, wk_start_column), $witch_king)
-$world.set(Position.new(wk_start_row + 1, wk_start_column + 1), $witch_king)
-$world.set(Position.new(wk_start_row, wk_start_column + 1), $witch_king)
-
-# Only forest around Witch King Fortress
-puts "generating forest around fortress"
-$world.set(Position.new(wk_start_row - 1, wk_start_column - 1), $forest)
-$world.set(Position.new(wk_start_row - 1, wk_start_column), $forest)
-$world.set(Position.new(wk_start_row - 1, wk_start_column + 1), $forest)
-$world.set(Position.new(wk_start_row - 1, wk_start_column + 2), $forest)
-$world.set(Position.new(wk_start_row, wk_start_column - 1), $forest)
-$world.set(Position.new(wk_start_row, wk_start_column + 2), $forest)
-$world.set(Position.new(wk_start_row + 1, wk_start_column - 1), $forest)
-$world.set(Position.new(wk_start_row + 1, wk_start_column + 2), $forest)
-$world.set(Position.new(wk_start_row + 2, wk_start_column - 1), $forest)
-$world.set(Position.new(wk_start_row + 2, wk_start_column), $forest)
-$world.set(Position.new(wk_start_row + 2, wk_start_column + 1), $forest)
-$world.set(Position.new(wk_start_row + 2, wk_start_column + 2), $forest)
+WitchKing.new.add_to($world, ROWS, COLS)
 
 puts
 print_map
