@@ -6,12 +6,35 @@ class Map
   attr_accessor :rows
   attr_accessor :cells
   attr_reader :blank_tile
+  attr_reader :quadrant
 
   def initialize(rows, cols)
     @rows  = rows
     @cols  = cols
     @blank_tile = Tile.new(' ')
     @cells = Array.new(rows) { Array.new(cols) }
+    init_quadrants
+  end
+
+  def init_quadrants
+    @quadrant = []
+    @quadrant[1] = { row_start: 0, row_end: @rows/2 - 1, col_start: 0, col_end: @cols/2 - 1}
+    @quadrant[2] = { row_start: 0, row_end: @rows/2 - 1, col_start: @cols/2, col_end: @cols - 1 }
+    @quadrant[3] = { row_start: @rows/2, row_end: @rows - 1, col_start: 0, col_end: @cols/2 - 1 }
+    @quadrant[4] = { row_start: @rows/2, row_end: @rows - 1, col_start: @cols/2, col_end: @cols - 1 }
+  end
+
+  def quadrant_contents(quadrant_num)
+    quadrant_extants = @quadrant[quadrant_num]
+    quadrant_contents = []
+    (quadrant_extants[:row_start]..quadrant_extants[:row_end]).each do |i|
+      (quadrant_extants[:col_start]..quadrant_extants[:col_end]).each do |j|
+        # puts "#{i}, #{j}"
+        quadrant_contents << cell(Position.new(i,j))
+      end
+    end
+
+    quadrant_contents
   end
 
   def out_of_bounds(position)

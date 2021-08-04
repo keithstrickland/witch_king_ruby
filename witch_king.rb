@@ -14,7 +14,7 @@ class WitchKing
 
   def add_to(map, rows, cols)
     # Witch King Fortress
-    puts "generating fortress"
+    # puts "generating fortress"
     wk_start_row    = gen_wk_start_row(rows)
     wk_start_column = gen_wk_start_column(cols)
 
@@ -24,7 +24,7 @@ class WitchKing
     map.set(Position.new(wk_start_row, wk_start_column + 1), $witch_king)
 
     # Only forest around Witch King Fortress
-    puts "generating forest around fortress"
+    # puts "generating forest around fortress"
     map.set(Position.new(wk_start_row - 1, wk_start_column - 1), $forest)
     map.set(Position.new(wk_start_row - 1, wk_start_column), $forest)
     map.set(Position.new(wk_start_row - 1, wk_start_column + 1), $forest)

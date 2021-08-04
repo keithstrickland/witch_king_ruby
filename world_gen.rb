@@ -106,8 +106,20 @@ def print_map
   end
 end
 
+def print_quadrant(quadrant, offset_row=0, offset_cols=0)
+  20.times do |i|
+    x = i + offset_row
+    20.times do |j|
+      y = j + offset_cols
+      index = (x * 20) + y
+      print quadrant[index]
+    end
+    puts
+  end
+end
+
 # First pass
-puts "First pass..."
+# puts "First pass..."
 ROWS.times do |i|
   COLS.times do |j|
     position = Position.new(i, j)
@@ -116,11 +128,8 @@ ROWS.times do |i|
   end
 end
 
-# puts
-# print_map
-
 # Second pass - fill in
-puts "Second pass..."
+# puts "Second pass..."
 ROWS.times do |i|
   COLS.times do |j|
     position = Position.new(i, j)
@@ -131,7 +140,7 @@ ROWS.times do |i|
         # puts "Checking mountain add..."
         $world.set(position, $mountain) if continue?(15)
       elsif $world.nearby?(position, $water)
-        $world.set(position, $water) if continue?(10)
+        $world.set(position, $water) if continue?(20)
       end
     end
   end
@@ -141,3 +150,10 @@ WitchKing.new.add_to($world, ROWS, COLS)
 
 puts
 print_map
+
+# puts
+#
+# q1 = $world.quadrant_contents(1)
+# print_quadrant q1
+# q3 = $world.quadrant_contents(3)
+# print_quadrant q3
