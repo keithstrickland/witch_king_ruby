@@ -16,6 +16,9 @@
 # Ignore Byebug command history file.
 .byebug_history
 
+## DragonRuby
+/.dragonruby/
+
 ## Specific to RubyMotion:
 .dat*
 .repl_history

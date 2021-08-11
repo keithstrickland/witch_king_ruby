@@ -1,0 +1,7 @@
+devid=Keith
+devtitle=K Games
+gameid=wksgame
+gametitle=Witch King
+version=0.1
+icon=metadata/icon.png
+compile_ruby=false
